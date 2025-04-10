@@ -1,3 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">asesment1</string>
+    <string name="app_name">Assessment 1</string>
+    <string name="suhu_intro">Temperature conversion allows you to convert temperature values between units such as Celsius, Fahrenheit, and Kelvin. Try it now!</string>
+    <string name="masukkan_suhu">Enter temperature</string>
+    <string name="dari_satuan">From unit</string>
+    <string name="ke_satuan">To unit</string>
+    <string name="celsius">Celsius</string>
+    <string name="fahrenheit">Fahrenheit</string>
+    <string name="kelvin">Kelvin</string>
+    <string name="konversi">Convert</string>
+    <string name="reset">Reset</string>
+    <string name="hasil_konversi">Result: %1$.2f %2$s</string>
+    <string name="input_invalid">This field cannot be empty</string>
+    <string name="bagikan">Share</string>
+    <string name="bagikan_template">Original temperature: %1$.2f %2$s\nConverted to: %3$s\nResult: %4$.2f %3$s</string>
+    <string name="tentang_aplikasi">About the App</string>
+    <string name="copyright">Temperature Converter is an Android application that allows users to convert temperature values between Celsius, Fahrenheit, and Kelvin.\n\nCopyright © 2024–2025 Faiq Athif N H.\nAll rights reserved.</string>
+    <string name="kembali">Back</string>
+    <string name="deskripsi_gambar">Temperature Image</string>
 </resources>
