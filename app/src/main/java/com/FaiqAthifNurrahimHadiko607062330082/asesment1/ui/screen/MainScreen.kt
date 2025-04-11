@@ -111,10 +111,26 @@ fun ScreenContent(modifier: Modifier) {
         )
 
         Text(text = stringResource(R.string.dari_satuan), style = MaterialTheme.typography.labelLarge)
-        UnitPicker(units, fromUnit) { fromUnit = it }
+        UnitDropdownPicker(
+            label = stringResource(R.string.dari_satuan),
+            options = units,
+            selectedOption = fromUnit,
+            onSelect = {
+                fromUnit = it
+                hasConverted = false
+            }
+        )
 
         Text(text = stringResource(R.string.ke_satuan), style = MaterialTheme.typography.labelLarge)
-        UnitPicker(units, toUnit) { toUnit = it }
+        UnitDropdownPicker(
+            label = stringResource(R.string.ke_satuan),
+            options = units,
+            selectedOption = toUnit,
+            onSelect = {
+                toUnit = it
+                hasConverted = false
+            }
+        )
         Row(
             modifier = modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceAround
@@ -177,30 +193,43 @@ fun ScreenContent(modifier: Modifier) {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun UnitPicker(options: List<String>, selectedOption: String, onSelect: (String) -> Unit) {
-    Row(
-        modifier = Modifier
-            .padding(top = 6.dp)
-            .border(1.dp, Color.Gray, RoundedCornerShape(4.dp))
+fun UnitDropdownPicker(
+    label: String,
+    options: List<String>,
+    selectedOption: String,
+    onSelect: (String) -> Unit
+) {
+    var expanded by remember { mutableStateOf(false) }
+
+    ExposedDropdownMenuBox(
+        expanded = expanded,
+        onExpandedChange = { expanded = !expanded },
+        modifier = Modifier.fillMaxWidth()
     ) {
-        options.forEach { text ->
-            Row(
-                modifier = Modifier
-                    .selectable(
-                        selected = selectedOption == text,
-                        onClick = { onSelect(text) },
-                        role = Role.RadioButton
-                    )
-                    .weight(1f)
-                    .padding(16.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                RadioButton(selected = selectedOption == text, onClick = null)
-                Text(
-                    text = text,
-                    modifier = Modifier.padding(start = 8.dp),
-                    style = TextStyle(fontSize = 11.sp)
+        TextField(
+            readOnly = true,
+            value = selectedOption,
+            onValueChange = {},
+            label = { Text(label) },
+            trailingIcon = {
+                ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
+            },
+            modifier = Modifier.menuAnchor().fillMaxWidth(),
+            colors = ExposedDropdownMenuDefaults.textFieldColors()
+        )
+        ExposedDropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = false }
+        ) {
+            options.forEach { selectionOption ->
+                DropdownMenuItem(
+                    text = { Text(selectionOption) },
+                    onClick = {
+                        onSelect(selectionOption)
+                        expanded = false
+                    }
                 )
             }
         }
