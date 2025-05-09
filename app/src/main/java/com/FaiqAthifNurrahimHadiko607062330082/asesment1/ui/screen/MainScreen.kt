@@ -115,8 +115,12 @@ fun ScreenContent(modifier: Modifier) {
             label = stringResource(R.string.dari_satuan),
             options = units,
             selectedOption = fromUnit,
-            onSelect = {
-                fromUnit = it
+            onSelect = { newValue ->
+                if (newValue == toUnit) {
+                    // If the new value is the same as toUnit, swap them
+                    toUnit = fromUnit
+                }
+                fromUnit = newValue
                 hasConverted = false
             }
         )
@@ -126,8 +130,12 @@ fun ScreenContent(modifier: Modifier) {
             label = stringResource(R.string.ke_satuan),
             options = units,
             selectedOption = toUnit,
-            onSelect = {
-                toUnit = it
+            onSelect = { newValue ->
+                if (newValue == fromUnit) {
+                    // If the new value is the same as fromUnit, swap them
+                    fromUnit = toUnit
+                }
+                toUnit = newValue
                 hasConverted = false
             }
         )
