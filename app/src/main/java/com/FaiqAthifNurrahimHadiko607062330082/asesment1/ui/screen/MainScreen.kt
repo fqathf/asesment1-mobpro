@@ -111,19 +111,40 @@ fun ScreenContent(modifier: Modifier) {
         )
 
         Text(text = stringResource(R.string.dari_satuan), style = MaterialTheme.typography.labelLarge)
-        UnitDropdownPicker(
-            label = stringResource(R.string.dari_satuan),
-            options = units,
-            selectedOption = fromUnit,
-            onSelect = { newValue ->
-                if (newValue == toUnit) {
-                    // If the new value is the same as toUnit, swap them
-                    toUnit = fromUnit
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            units.forEach { unit ->
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .selectable(
+                            selected = (unit == fromUnit),
+                            onClick = {
+                                if (unit == toUnit) {
+                                    toUnit = fromUnit
+                                }
+                                fromUnit = unit
+                                hasConverted = false
+                            },
+                            role = Role.RadioButton
+                        )
+                        .padding(vertical = 8.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    RadioButton(
+                        selected = (unit == fromUnit),
+                        onClick = null
+                    )
+                    Text(
+                        text = unit,
+                        style = MaterialTheme.typography.bodyLarge,
+                        modifier = Modifier.padding(start = 8.dp)
+                    )
                 }
-                fromUnit = newValue
-                hasConverted = false
             }
-        )
+        }
 
         Text(text = stringResource(R.string.ke_satuan), style = MaterialTheme.typography.labelLarge)
         UnitDropdownPicker(
@@ -132,7 +153,6 @@ fun ScreenContent(modifier: Modifier) {
             selectedOption = toUnit,
             onSelect = { newValue ->
                 if (newValue == fromUnit) {
-                    // If the new value is the same as fromUnit, swap them
                     fromUnit = toUnit
                 }
                 toUnit = newValue
